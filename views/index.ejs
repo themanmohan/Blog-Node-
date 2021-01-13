@@ -1,12 +1,34 @@
 
 <%- include('./partials/header.ejs') %>
+
    <div class="div1">
-    <% blog.forEach((data)=>{%>
-        <%=data.title%>
-        <img src="<%=data.image%>" alt="">
-        <%=data.created%>
-        <%=data.body.substring(0,100) %>....
-        <a href="/blog/<%=data._id%>">Read More</a>
-            <%}) %>
+       <div class="ui main text container">
+           <div class="ui huge header">Blogging App</div>
+           <div class="ui top attched segment">
+               <div class="ui divided items">
+                    <% blog.forEach((data)=>{%>
+                        <div class="item">
+                            <div class="image">
+                            <img src="<%=data.image%>" alt="">
+                            </div>
+                            <div class="content">
+                                <a href="/blog/<%=data._id%>" class="header"><%=data.title%></a>
+                                <div class="meta">
+                                    <span><%=data.created.toDateString() %></span>
+                                </div>
+                                <div class="description">
+                                <p><%=data.body.substring(0,100) %>....</p>
+                                </div>
+                                <div class="extras">
+                                  <a class="ui floated basic violet button" href="/blog/<%=data._id%>">Read More
+                                <i class="right chevron icon"></i>
+                                </a>
+                                </div>
+                            </div>
+                        </div>
+                        <%}) %>
+               </div>
+           </div>
+        </div>
    </div>
 <%- include('./partials/footer.ejs') %>

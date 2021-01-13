@@ -1,6 +1,7 @@
 const express =require("express")
 const bodyParser = require("body-parser")
 const method_override=require("method-override")
+const expressSenitizer=require("express-sanitizer")
 const mongoose=require("mongoose")
 const app=express()
 
@@ -13,8 +14,9 @@ mongoose.connect("mongodb://localhost/Blog", {
 app.set("view engine","ejs")
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended:true}))
+app.use(expressSenitizer())
 app.use(method_override("_method"))
-
+ 
 const blogSchema=mongoose.Schema({
     title:String,
     body:String,
@@ -38,6 +40,7 @@ app.get("/blog",function(req,res){
 }) 
 
 app.post("/blogs", function (req, res) {
+     req.body.blog.body = req.sanitize(req.body.blog.body)
   Blog.create(req.body.blog,function(err,data){
       if(err){
           res.redirect("new")
